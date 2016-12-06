@@ -24,7 +24,7 @@ SECRET_KEY = 'aht55gxk-el2snjpb%qt(7_o(#ecvqe+#9#vc!l#f%r!5)i1l0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['vote2decide.herokuapp.com']
 
 
 # Application definition
