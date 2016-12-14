@@ -12,10 +12,11 @@
 <link rel="icon" href="../../favicon.ico">
 <title>Vote2Decide</title>
 <!-- import jquery and bootstrap -->
-<script src = "../../static/dist/js/jquery.js"></script>
-<link rel="stylesheet" type="text/css" href="../../static/dist/css/bootstrap.min.css">
-<script type="text/javascript" src="../static/dist/js/bootstrap.min.js"></script>
-<link href="../../static/css/narrow-jumbotron.css" rel="stylesheet">
+{% load static %}
+<script src = "{% static "dist/js/jquery.js" %}" ></script>
+<link rel="stylesheet" type="text/css" href="{% static "dist/css/bootstrap.min.css" %}">
+<script type="text/javascript" src="{% static "dist/js/bootstrap.min.js" %}"></script>
+<link href="{% static "css/narrow-jumbotron.css"%}" rel="stylesheet">
 </head>
 
   <body>
@@ -43,7 +44,7 @@
 		<form action="{% url 'polls:vote' question.url_random %}" method="post">
 		{% csrf_token %}
 		{% for choice in question.choice_set.all %}
-		    <input type="radio" name="choice left" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+		    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
 		    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
 		{% endfor %}
 		<input type="submit" value="Vote" />

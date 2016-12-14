@@ -11,7 +11,6 @@ def url_generate():
     random_url = ""
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     nums = [i for i in range(0,10)]
-    print nums
     for i in range(0, 9):
         if randint(0,1) == 1: random_url += str(nums[randint(0,9)])
         else: random_url += letters[randint(0,25)]
@@ -31,9 +30,10 @@ def index(request):
         q.save()
         for i in range(0, len(c_text)): q.choice_set.create(choice_text = c_text[i], votes=0)
         q.url_random = url_generate() + str(q.id)
-        print q.url_random
         q.save()
-        return render(request, 'polls/index.html')
+        print q.url_random
+        url = unicode(q.url_random, "utf-8")
+        return HttpResponseRedirect(reverse("polls:detail", args=(url,)))
 
 def about(request):
     return render(request, 'polls/about.html')
@@ -43,8 +43,6 @@ def detail(request, question_url):
     return render(request, 'polls/detail.html', {'question': question})
 
 def results(request, question_url):
-    print "HERE!!"
-    print question_url
     question = get_object_or_404(Question, url_random=question_url)
     return render(request, 'polls/results.html', {'question': question})
 
@@ -64,4 +62,4 @@ def vote(request, question_url):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question_url)))
+        return HttpResponseRedirect(reverse('polls:results', args=(question_url,)))
