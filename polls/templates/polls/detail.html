@@ -1,12 +1,63 @@
-<h1>{{ question.question_text }}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<html>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="../../favicon.ico">
+<title>Vote2Decide</title>
+<!-- import jquery and bootstrap -->
+<script src = "../../static/dist/js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="../../static/dist/css/bootstrap.min.css">
+<script type="text/javascript" src="../static/dist/js/bootstrap.min.js"></script>
+<link href="../../static/css/narrow-jumbotron.css" rel="stylesheet">
+</head>
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
-{% csrf_token %}
-{% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
-{% endfor %}
-<input type="submit" value="Vote" />
-</form>
+  <body>
+
+  <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills float-xs-right">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'polls:about' %}">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'polls:index' %}">New poll</a>
+            </li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Let's vote</h3>
+      </div>
+
+ 	<div class="jumbotron">
+        <h3>{{ question.question_text }}</h3><br>
+
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+		<form action="{% url 'polls:vote' question.id %}" method="post">
+		{% csrf_token %}
+		{% for choice in question.choice_set.all %}
+		    <input type="radio" name="choice left" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+		    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+		{% endfor %}
+		<input type="submit" value="Vote" />
+		</form>
+	</div>
+
+    <footer class="footer">
+        <p>&copy; ElProductions 2016</p>
+    </footer>
+  </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+
+</body>
+</html>

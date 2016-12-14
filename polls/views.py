@@ -5,38 +5,51 @@ from django.views import generic
 
 from .models import Choice, Question
 from django.utils import timezone
+from random import randint
 
-# def index(request):
-#     latest_question_list = Question.objects.order_by('-pub_date')[:5]
-#     context = {'latest_question_list': latest_question_list}
-#     return render(request, 'polls/index.html', context)
+def url_generate():
+    random_url = ""
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    nums = [i for i in range(0,10)]
+    print nums
+    for i in range(0, 9):
+        if randint(0,1) == 1: random_url += str(nums[randint(0,9)])
+        else: random_url += letters[randint(0,25)]
+    random_url += letters[randint(0,25)]
+    return random_url
 
-# def detail(request, question_id):
-#     question = get_object_or_404(Question, pk=question_id)
-#     return render(request, 'polls/detail.html', {'question': question})
+def index(request):
+    try: 
+        q_text = request.POST['question']
+        p_date = request.POST['date'].split("/")
+        c_text = request.POST.getlist('option')
+    except:
+        return render(request, 'polls/index.html')
+    else:
+        date = p_date[2]+"-"+p_date[0]+"-"+p_date[1]
+        q = Question(question_text= q_text, pub_date= date)
+        q.save()
+        for i in range(0, len(c_text)): q.choice_set.create(choice_text = c_text[i], votes=0)
+        q.url_random = url_generate() + str(q.id)
+        print q.url_random
+        q.save()
+        return render(request, 'polls/index.html')
 
-# def results(request, question_id):
-#     question = get_object_or_404(Question, pk=question_id)
-#     return render(request, 'polls/results.html', {'question': question})
+def about(request):
+    return render(request, 'polls/about.html')
 
-class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
-    context_object_name = 'latest_question_list'
+def detail(request, question_url):
+    question = get_object_or_404(Question, url_random=question_url)
+    return render(request, 'polls/detail.html', {'question': question})
 
-    def get_queryset(self):
-        """Return the last five published questions."""
-        return Question.objects.order_by('-pub_date')[:5]
+def results(request, question_url):
+    print "HERE!!"
+    print question_url
+    question = get_object_or_404(Question, url_random=question_url)
+    return render(request, 'polls/results.html', {'question': question})
 
-class DetailView(generic.DetailView):
-    model = Question
-    template_name = 'polls/detail.html'
-
-class ResultsView(generic.DetailView):
-    model = Question
-    template_name = 'polls/results.html'
-
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+def vote(request, question_url):
+    question = get_object_or_404(Question, url_random=question_url)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
@@ -51,4 +64,4 @@ def vote(request, question_id):
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return HttpResponseRedirect(reverse('polls:results', args=(question_url)))

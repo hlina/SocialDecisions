@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="../../favicon.ico">
+<title>Vote2Decide</title>
+<!-- import jquery and bootstrap -->
+{% load static %}
+<script src = "{% static "dist/js/jquery.js" %}" ></script>
+<link rel="stylesheet" type="text/css" href="{% static "dist/css/bootstrap.min.css" %}">
+<script type="text/javascript" src="{% static "dist/js/bootstrap.min.js" %}"></script>
+<link href="{% static "css/narrow-jumbotron.css"%}" rel="stylesheet">
+<!-- Date picker and validator -->
+<script src = "../../static/dist/js/validator.js"></script>
+<script src = "../../static/dist/js/moment.js"></script>
+<script src = "../../static/dist/js/collapse.js"></script>
+<script src = "../../static/dist/js/transition.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+</head>
+
+  <body>
+
+  <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills float-xs-right">
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'polls:about' %}">About<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'polls:index' %}">New poll</a>
+            </li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Let's vote</h3>
+      </div>
+
+    <div class="jumbotron">
+        <h1 class="display-3">App vision</h1><br>
+        The idea for this app began when we realized how long it took to decide in groups where to eat. It's this social dilemma where usually no one individual has a strong enough preference to voice them and risk looking impolite by imposing their idea on others. I have wasted up to 30 minutes (I kid you not) on deciding places to go. This app will seek to break that social habit and encourage people to speak their minds, no matter how small the preference. 
+    </div>
+
+    <footer class="footer">
+        <p>&copy; ElProductions 2016</p>
+    </footer>
+  </div>
+
+<script src = "../../static/js/index.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
+
+</body>
+</html>
