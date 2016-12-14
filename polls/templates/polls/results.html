@@ -44,7 +44,7 @@
 		{% endfor %}
 		</ul>
 
-		<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+		<a href="{% url 'polls:detail' question.url_random %}">Vote again?</a>
 	</div>
 
     <footer class="footer">
