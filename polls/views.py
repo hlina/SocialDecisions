@@ -28,7 +28,8 @@ def index(request):
         date = p_date[2]+"-"+p_date[0]+"-"+p_date[1]
         q = Question(question_text= q_text, pub_date= date)
         q.save()
-        for i in range(0, len(c_text)): q.choice_set.create(choice_text = c_text[i], votes=0)
+        for i in range(0, len(c_text)): 
+            if c_text[i] != "": q.choice_set.create(choice_text = c_text[i], votes=0)
         q.url_random = url_generate() + str(q.id)
         q.save()
         print q.url_random
@@ -49,7 +50,14 @@ def results(request, question_url):
 def vote(request, question_url):
     question = get_object_or_404(Question, url_random=question_url)
     try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        if request.POST['choice'] == "other":
+            c_text = request.POST.getlist('option')
+            for i in range(0, len(c_text)): 
+                if c_text[i] != "": question.choice_set.create(choice_text = c_text[i], votes=1)
+        else: 
+            selected_choice = question.choice_set.get(pk=request.POST['choice'])
+            selected_choice.votes += 1
+            selected_choice.save()
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
@@ -57,8 +65,6 @@ def vote(request, question_url):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
         # Always return an HttpResponseRedirect after successfully dealing
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
